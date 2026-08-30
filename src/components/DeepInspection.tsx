@@ -7,6 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
+  LabelList
 } from 'recharts';
 import { useInspection } from '../hooks/useInspection';
 import { useRegister } from '../hooks/useRegister';
@@ -134,7 +135,7 @@ export function DeepInspection() {
                   <BarChart
                     data={chartData}
                     layout="vertical"
-                    margin={{ top: 0, right: 30, bottom: 0, left: 0 }}
+                    margin={{ top: 10, right: 50, bottom: 10, left: 10 }}
                     barSize={12}
                   >
                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#1E2636" />
@@ -142,7 +143,10 @@ export function DeepInspection() {
                     <YAxis
                       dataKey="name"
                       type="category"
-                      hide // Hide default axis, we'll draw custom labels
+                      width={130}
+                      tickLine={false}
+                      axisLine={false}
+                      tick={{ fill: '#94a3b8', fontSize: 12 }}
                     />
                     <Tooltip
                       cursor={{ fill: '#1E2636', opacity: 0.4 }}
@@ -173,21 +177,19 @@ export function DeepInspection() {
                           fill={entry.sign > 0 ? '#3B7CF6' : '#A855F7'} 
                         />
                       ))}
+                      <LabelList 
+                        dataKey="impactRaw" 
+                        position="right" 
+                        formatter={(_val: number, entry: any) => {
+                          const d = entry.payload;
+                          return `${d.sign > 0 ? '+' : ''}${d.impactRaw}% Impact`;
+                        }}
+                        fill="#3B7CF6" // We'll make this dynamic via content if needed, but fill can just be the default blue
+                        style={{ fontSize: 12, fontWeight: 600 }}
+                      />
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
-              </div>
-
-              {/* Custom Labels rendered outside SVG for better text wrapping/styling */}
-              <div className="flex flex-col gap-4 mt-2 -translate-y-full h-full justify-around pointer-events-none px-2">
-                {chartData.map((d, i) => (
-                  <div key={i} className="flex justify-between items-end text-xs">
-                    <span className="text-text-primary drop-shadow-md truncate max-w-[70%]">{d.name}</span>
-                    <span className={`font-semibold drop-shadow-md ${d.sign > 0 ? 'text-accent-blue' : 'text-status-purple'}`}>
-                      {d.impactRaw > 0 ? '+' : ''}{d.impactRaw}% Impact
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
