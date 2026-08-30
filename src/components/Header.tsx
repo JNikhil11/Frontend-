@@ -43,36 +43,22 @@ export function Header() {
 
       <div className="flex items-center gap-3">
 
-        {/* Telemetry clock — always visible */}
-        <div className="hidden md:flex flex-col items-end text-right px-3 border-r border-border-subtle" style={{borderColor:'#1A2129'}}>
-          <span className="text-text-muted font-mono-data text-xs tracking-widest uppercase">SYS TIME</span>
-          <span className="text-accent-blue font-mono-data text-xs tracking-wider">{clock}</span>
-        </div>
-
-        {/* ML Engine Status — telemetry readout style, not pill */}
+        {/* ML Engine Status & Telemetry clock */}
         <div className="relative">
-          <button
+          <div
             onClick={() => setShowEngineInfo(!showEngineInfo)}
-            className="flex items-center gap-2 px-3 py-1.5 border text-xs font-medium transition-all font-mono-data tracking-widest"
-            style={{
-              borderRadius: '2px',
-              borderColor: engineEnabled ? '#00D9A330' : '#FF6B4A30',
-              backgroundColor: engineEnabled ? '#00D9A308' : '#FF6B4A08',
-              color: engineEnabled ? '#00D9A3' : '#FF6B4A',
-            }}
+            className="live-indicator cursor-pointer px-4 py-2 hover:bg-white/5 transition-colors"
+            style={{ color: engineEnabled ? '#00D9A3' : '#FF6B4A' }}
           >
-            {/* Blinking diamond indicator */}
-            <span
-              className="inline-block w-2 h-2 blink"
-              style={{
-                backgroundColor: engineEnabled ? '#00D9A3' : '#FF6B4A',
-                borderRadius: '1px',
-                transform: 'rotate(45deg)',
-                boxShadow: engineEnabled ? '0 0 6px #00D9A3' : '0 0 6px #FF6B4A',
-              }}
+            <span 
+              className="live-dot" 
+              style={{ 
+                background: engineEnabled ? '#00D9A3' : '#FF6B4A',
+                boxShadow: `0 0 0 0 ${engineEnabled ? 'rgba(0, 217, 163, 0.25)' : 'rgba(255, 107, 74, 0.25)'}`
+              }} 
             />
-            COGX-ML &nbsp;{engineEnabled ? '● ONLINE' : '◌ PAUSED'}
-          </button>
+            {engineEnabled ? 'ML ENGINE ACTIVE' : 'ML ENGINE PAUSED'} &middot; LAST SYNC {clock}
+          </div>
 
           {/* Engine info popover */}
           {showEngineInfo && status && (
