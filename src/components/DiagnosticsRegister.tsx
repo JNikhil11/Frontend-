@@ -3,7 +3,7 @@ import { useRegister } from '../hooks/useRegister';
 import { useDashboardStore } from '../store/dashboardStore';
 import { LoadingPanel } from './LoadingPanel';
 import { ErrorPanel } from './ErrorPanel';
-import { CategoryBadge } from './CategoryBadge';
+
 
 export function DiagnosticsRegister() {
   const { selectedVehicleId, selectedPartId, setSelectedPartId } = useDashboardStore();
@@ -104,8 +104,8 @@ export function DiagnosticsRegister() {
                     <td className="px-5 py-3 font-semibold text-text-primary">
                       {row.part_id}
                     </td>
-                    <td className="px-5 py-3">
-                      <CategoryBadge category={row.category} />
+                    <td className="px-5 py-3 text-text-primary">
+                      {row.category}
                     </td>
                     <td className="px-5 py-3 text-text-muted">
                       {row.sensing_channel}
@@ -114,13 +114,21 @@ export function DiagnosticsRegister() {
                       {row.factor}
                     </td>
                     <td className="px-5 py-3 text-right text-text-primary">
-                      {row.value_0h.toFixed(2)} µA
+                      {row.value_0h.toFixed(2)} &micro;A
                     </td>
                     <td className="px-5 py-3 text-right text-text-primary">
-                      {row.predicted_168h.toFixed(2)} µA
+                      {row.predicted_168h.toFixed(2)} &micro;A
                     </td>
-                    <td className={`px-5 py-3 text-right font-semibold ${row.status === 'CLEARED' ? 'text-green-500' : 'text-red-500'}`}>
-                      {row.status || (row.category === 'Cleared' ? 'CLEARED' : 'REJECTED')}
+                    <td className="px-5 py-3 text-right">
+                      {(() => {
+                        const statusStr = row.status || (row.category === 'Cleared' ? 'CLEARED' : 'REJECTED');
+                        const isCleared = statusStr === 'CLEARED';
+                        const isPending = statusStr === 'RE-SCREEN' || statusStr === 'PENDING';
+                        const cls = isCleared ? 'tag-cleared' : isPending ? 'tag-pending' : 'tag-rejected';
+                        return (
+                          <span className={`tag ${cls}`}>[{statusStr}]</span>
+                        );
+                      })()}
                     </td>
                   </tr>
                 ))}
