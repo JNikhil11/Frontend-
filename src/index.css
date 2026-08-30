@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-deep-space text-text-primary antialiased;
+    font-family: 'IBM Plex Sans', 'Space Grotesk', system-ui, sans-serif;
+    /* Blueprint grid overlay */
+    background-color: #0B0F14;
+    background-image:
+      linear-gradient(rgba(26, 33, 41, 0.6) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 33, 41, 0.6) 1px, transparent 1px);
+    background-size: 32px 32px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* All numeric/data values in monospace */
+  .font-mono, [data-mono], .stat-value, .mono {
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', Consolas, monospace;
+  }
+
+  :root {
+    --scrollbar-thumb: #1A2129;
+    --scrollbar-track: #0B0F14;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Sharp panel — 3px radius, not 12px+ */
+  .panel {
+    @apply bg-bg-panel border border-border-subtle;
+    border-radius: 3px;
+  }
+
+  .panel-header {
+    @apply text-accent-blue font-semibold text-base tracking-wide;
+    font-family: 'IBM Plex Sans', sans-serif;
+    letter-spacing: 0.04em;
+  }
+
+  .stat-label {
+    @apply text-text-muted uppercase text-xs tracking-widest font-medium;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.12em;
+  }
+
+  /* Stat values always in mono */
+  .stat-value {
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    font-feature-settings: "tnum";
+  }
+
+  .btn-primary {
+    @apply bg-accent-blue hover:bg-accent-blue-dark text-deep-space font-bold uppercase tracking-widest
+           px-6 py-3 transition-all duration-200 focus:outline-none focus:ring-2
+           focus:ring-accent-blue focus:ring-offset-2 focus:ring-offset-bg-panel;
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+
+  .btn-outline {
+    @apply border border-border-subtle text-text-muted hover:text-text-primary hover:border-text-muted
+           font-medium px-4 py-1.5 transition-all duration-150 text-sm
+           focus:outline-none focus:ring-1 focus:ring-accent-blue focus:ring-offset-2 focus:ring-offset-bg-panel;
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .input-field {
+    @apply w-full bg-bg-panel-alt border border-border-subtle px-4 py-3
+           text-text-primary placeholder-text-muted text-sm
+           focus:outline-none focus:ring-1 focus:ring-accent-blue focus:border-accent-blue
+           transition-colors duration-150;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Category badges — square diamond style, not pill */
+  .category-badge {
+    @apply inline-flex items-center px-2 py-0.5 text-xs font-medium border;
+    border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-spatial {
+    @apply category-badge bg-status-red/10 text-status-red border-status-red/30;
+  }
+
+  .badge-thermal {
+    @apply category-badge bg-status-orange/10 text-status-orange border-status-orange/30;
+  }
+
+  .badge-atmospheric {
+    @apply category-badge bg-status-purple/10 text-status-purple border-status-purple/30;
+  }
+
+  .section-divider {
+    @apply border-t border-border-subtle my-0;
+  }
+
+  /* Star dots decorative */
+  .star-field {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .table-row-hover {
+    @apply hover:bg-accent-blue/5 cursor-pointer transition-colors duration-100;
+  }
+
+  .table-row-selected {
+    @apply bg-accent-blue/10 border-l-2 border-accent-blue;
+  }
+
+  /* Telemetry readout blinking cursor */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  /* Square status indicator instead of pill */
+  .status-indicator {
+    @apply inline-block w-2 h-2;
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+}
+
+@layer utilities {
+  .text-glow-blue {
+    text-shadow: 0 0 10px rgba(0, 217, 163, 0.5);
+  }
+  .text-glow-red {
+    text-shadow: 0 0 10px rgba(255, 107, 74, 0.5);
+  }
+  .text-glow-green {
+    text-shadow: 0 0 8px rgba(0, 217, 163, 0.4);
+  }
+  .font-mono-data {
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    font-feature-settings: "tnum";
+    letter-spacing: 0.02em;
+  }
+}
