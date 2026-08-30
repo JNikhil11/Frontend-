@@ -134,8 +134,23 @@ export async function apiGetPartInspection(partId: string): Promise<PartInspecti
   if (USE_MOCKS) {
     await mockDelay(300);
     const entry = MOCK_INSPECTIONS[partId];
-    if (!entry) throw new Error(`Inspection data not found for ${partId}`);
-    return entry;
+    if (entry) return entry;
+    
+    // Generate realistic dynamic fallback if missing
+    return {
+      part_id: partId,
+      status: "WATCH",
+      anomaly_category: "Simulated Inspection",
+      sensing_channel: "Diagnostic Array",
+      physical_factor: "Nominal Variation",
+      forecast_168h: 22.4,
+      verdict: "Manual review required. The system identified minor deviations from baseline characteristics.",
+      factor_weights: [
+        { factor_name: "Thermal Gradient", impact_pct: 45 },
+        { factor_name: "Spatial Proximity", impact_pct: 35 },
+        { factor_name: "Baseline Leakage", impact_pct: 20 }
+      ]
+    };
   }
   const res = await axiosClient.get<PartInspection>(`/parts/${partId}/inspection`);
   return res.data;
