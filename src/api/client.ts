@@ -146,9 +146,9 @@ export async function apiGetPartInspection(partId: string): Promise<PartInspecti
       forecast_168h: 22.4,
       verdict: "Manual review required. The system identified minor deviations from baseline characteristics.",
       factor_weights: [
-        { factor_name: "Thermal Gradient", impact_pct: 45 },
-        { factor_name: "Spatial Proximity", impact_pct: 35 },
-        { factor_name: "Baseline Leakage", impact_pct: 20 }
+        { feature: "Thermal Gradient", impact_pct: 45 },
+        { feature: "Spatial Proximity", impact_pct: 35 },
+        { feature: "Baseline Leakage", impact_pct: 20 }
       ]
     };
   }
