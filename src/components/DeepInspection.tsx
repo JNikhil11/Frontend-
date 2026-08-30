@@ -180,12 +180,11 @@ export function DeepInspection() {
                       <LabelList 
                         dataKey="impactRaw" 
                         position="right" 
-                        formatter={(_val: number, entry: any) => {
-                          const d = entry.payload;
-                          return `${d.sign > 0 ? '+' : ''}${d.impactRaw}% Impact`;
+                        formatter={(val: number) => {
+                          return `${val > 0 ? '+' : ''}${val}% Impact`;
                         }}
-                        fill="#3B7CF6" // We'll make this dynamic via content if needed, but fill can just be the default blue
-                        style={{ fontSize: 12, fontWeight: 600 }}
+                        fill="#00D9A3"
+                        style={{ fontSize: 12, fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}
                       />
                     </Bar>
                   </BarChart>

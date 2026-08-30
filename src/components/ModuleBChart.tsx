@@ -50,10 +50,10 @@ function ModuleBTooltip({
           {display.map((entry) => {
             const isFlag = !!series?.find((s) => s.part_id === entry.name)?.exceeds_slope;
             return (
-              <p key={entry.name} className="flex justify-between gap-4" style={{ color: entry.color }}>
-                <span>{isFlag ? '⚠️ ' : '✓ '}{entry.name}</span>
-                <span className="font-semibold">{entry.value} µA</span>
-              </p>
+              <li key={entry.name} className="flex justify-between gap-4">
+                <span style={{ color: entry.color }}>{isFlag ? '⚠️ ' : '✓ '}{entry.name}</span>
+                <span className="font-semibold">{entry.value} &micro;A</span>
+              </li>
             );
           })}
           {payload.length > display.length && (
@@ -165,7 +165,7 @@ export function ModuleBChart() {
                 strokeDasharray="8 4"
                 strokeWidth={2}
                 label={{
-                  value: `Safety Limit (${data.safety_slope_limit_uA} µA)`,
+                  value: `Safety Limit (${data.safety_slope_limit_uA} &micro;A)`,
                   position: 'insideTopRight',
                   fill: '#F59E0B',
                   fontSize: 10,

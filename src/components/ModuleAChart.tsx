@@ -41,7 +41,7 @@ function CustomDot(props: {
           fontWeight={600}
           fontFamily="Inter, sans-serif"
         >
-          {payload.part_id} ({payload.value_0h}µA)
+          {payload.part_id} ({payload.value_0h}&micro;A)
         </text>
       </g>
     );
@@ -77,7 +77,7 @@ function ModuleATooltip({
       <p className="text-text-muted">
         Iddq 0h:{' '}
         <span className={pt.is_outlier ? 'text-status-red font-bold' : 'text-text-primary'}>
-          {pt.value_0h} µA
+          {pt.value_0h} &micro;A
         </span>
       </p>
       {pt.is_outlier && (
